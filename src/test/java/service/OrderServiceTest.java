@@ -14,10 +14,7 @@ import service.interfaces.OrderServiceInterface;
 import javax.validation.ValidationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -104,7 +101,10 @@ class OrderServiceTest {
         var dates = getDates();
         List<Order> orders = createOrders(dates);
 
-        Date mockedDate = dates.get(0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        Date mockedDate = calendar.getTime();
+
         when(mock.findAllByUserIdAndDateIsAfter(1, mockedDate)).thenReturn(orders);
 
         dates = dates.stream().sorted()
